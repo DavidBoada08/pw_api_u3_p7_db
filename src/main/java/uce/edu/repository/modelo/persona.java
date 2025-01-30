@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name= "persona" )
-public class persona {
+public class Persona {
     @Id
     @GeneratedValue(generator = "sep_persona", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "sep_persona", 
@@ -24,6 +24,17 @@ public class persona {
     private String apellido;
     @Column(name = "pers_fecha_nacimiento") 
     private LocalDateTime fechaNacimiento;
+
+
+    public Persona() {
+    }
+
+    public Persona(Integer id, String nombre, String apellido, LocalDateTime fechaNacimiento) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+    }
 
     // Getters and Setters
     public Integer getId() {

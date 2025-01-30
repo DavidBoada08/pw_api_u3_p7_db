@@ -1,0 +1,64 @@
+package uce.edu.service;
+
+import java.util.function.Function;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import uce.edu.repository.IPersonaRepository;
+import uce.edu.repository.modelo.Persona;
+import uce.edu.to.PersonaTo;
+
+
+@ApplicationScoped
+public class PersonaServiceImpl implements IPersonaService {
+
+    private Function<Persona,PersonaTo> mapTo = p -> {
+        PersonaTo pTo = new PersonaTo(
+            p.getId(), 
+            p.getNombre(), 
+            p.getApellido(), 
+            p.getFechaNacimiento());
+        return pTo;
+    };
+
+    private Function<PersonaTo,Persona> mapPersona = pTo -> {
+        Persona p = new Persona(
+            pTo.getId(), 
+            pTo.getNombre(), 
+            pTo.getApellido(), 
+            pTo.getFechaNacimiento());
+        return p;
+    };
+
+
+
+    @Inject
+    private IPersonaRepository iPersonaRepository;
+
+    @Override
+    public PersonaTo buscarPorId(Integer id) {
+        
+        Persona per =this.iPersonaRepository.buscarPorId(id);
+        return this.mapTo.apply(per);
+    }
+
+    @Override
+    public void guardar(PersonaTo persona) {
+        this.iPersonaRepository.insertar(this.mapPersona.apply(persona));
+
+    }
+
+    @Override
+    public void actualizar(PersonaTo persona) {
+        Persona per = this.mapPersona.apply(persona);
+       this.iPersonaRepository.actualizar(per);
+
+    }
+
+    @Override
+    public void eliminar(Integer id) {
+       this.iPersonaRepository.eliminar(id);
+
+    }
+
+}
