@@ -19,7 +19,7 @@ public class PersonaController {
     @GET
     @Path("/buscar")
     public PersonaTo buscarPorId( ) {
-        Integer id = 1;
+        Integer id = 3;
         
         return this.iPersonaService.buscarPorId(id);
         //return Response.ok(this.iPersonaService.buscarPorId(id)).build();
@@ -52,7 +52,7 @@ public class PersonaController {
     @DELETE
     @Path("/borrar")
     public void borrar() {
-        Integer id = 1;
+        Integer id = 3;
     this.iPersonaService.eliminar(id);
 
     }
