@@ -2,8 +2,6 @@ package uce.edu.service;
 
 
 import java.util.List;
-
-import uce.edu.repository.modelo.Persona;
 import uce.edu.to.PersonaTo;
 
 public interface IPersonaService {

@@ -1,15 +1,23 @@
 package uce.edu.service;
 
+import java.util.List;
+
 import uce.edu.to.EstudianteTo;
 
 public interface IEstudianteService {
 
-    EstudianteTo buscarPorId(Integer id);
+    public EstudianteTo buscarPorId(Integer id);
 
-    void guardar(EstudianteTo estudiante);
+    public List<EstudianteTo> buscarTodos();
 
-    void actualizar(EstudianteTo estudiante);
+    public List<EstudianteTo> buscarPorNombre(String nombre);
 
-    void eliminar(Integer id);
+    public List<EstudianteTo> buscarPorNombreApellido(String nombre, String apellido);
+
+    public void guardar(EstudianteTo estudiante);
+
+    public void actualizar(EstudianteTo estudiante);
+
+    public void eliminar(Integer id);
 
 }

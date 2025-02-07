@@ -11,7 +11,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
-import uce.edu.repository.modelo.Persona;
 import uce.edu.service.IPersonaService;
 import uce.edu.to.PersonaTo;
 
