@@ -40,7 +40,11 @@ public class PersonaServiceImpl implements IPersonaService {
     public PersonaTo buscarPorId(Integer id) {
         
         Persona per =this.iPersonaRepository.buscarPorId(id);
+        try{
         return this.mapTo.apply(per);
+        }catch(Exception e){
+            return new PersonaTo();
+        }
     }
 
     @Override
@@ -65,6 +69,7 @@ public class PersonaServiceImpl implements IPersonaService {
     @Override
     public List<PersonaTo> buscarTodos() {
         List<Persona> personas = this.iPersonaRepository.buscarTodos();
+
         return personas.stream().map(this.mapTo).toList();
 
        

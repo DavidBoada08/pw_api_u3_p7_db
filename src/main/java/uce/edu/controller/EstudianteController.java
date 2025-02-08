@@ -23,64 +23,53 @@ public class EstudianteController {
     @GET
     @Path("/{id}")
     public EstudianteTo buscarPorId(@PathParam("id") Integer id) {
-        //Integer id = 1;
-
         return this.iEstudianteService.buscarPorId(id);
-        // return Response.ok(this.iEstudianteService.buscarPorId(id)).build();
     }
 
     @POST
     @Path("")
     public void guardar(EstudianteTo estudiante) {
         this.iEstudianteService.guardar(estudiante);
-
     }
 
     @PUT
-    @Path("")
-    public void actualizar(EstudianteTo estudiante) {
+    @Path("/{id}")
+    public void actualizar(EstudianteTo estudiante, @PathParam("id") Integer id) {
+        estudiante.setId(id);
         this.iEstudianteService.actualizar(estudiante);
-
     }
 
     @PATCH
-    @Path("")
-    public void actualizarParcial(EstudianteTo estudiante) {
-        EstudianteTo tmp = this.iEstudianteService.buscarPorId(estudiante.getId());
+    @Path("/{id}/nuevo/{cedula}")
+    public void actualizarParcial(EstudianteTo estudiante, @PathParam("id") Integer id, @PathParam("cedula") String cedula) {
+        System.out.println(cedula);
+        EstudianteTo tmp = this.iEstudianteService.buscarPorId(id);
         tmp.setNombre(estudiante.getNombre());
+        tmp.setCedula(cedula); // Asegúrate de que este método exista en EstudianteTo
         this.iEstudianteService.actualizar(tmp);
-
     }
 
     @DELETE
-    @Path("")
-    public void borrar() {
-        Integer id = 3;
+    @Path("/{id}")
+    public void borrar(@PathParam("id") Integer id) {
         this.iEstudianteService.eliminar(id);
-
     }
 
     @GET
     @Path("")
     public List<EstudianteTo> buscarTodos() {
         return this.iEstudianteService.buscarTodos();
-
-        //deber12 
     }
 
     @GET
     @Path("/porNombre")
-    public List<EstudianteTo> buscarPorNombre
-    (@QueryParam("nombre") String nombre) {
+    public List<EstudianteTo> buscarPorNombre(@QueryParam("nombre") String nombre) {
         return this.iEstudianteService.buscarPorNombre(nombre);
     }
 
     @GET
     @Path("/porNombreApellido")
-    public List<EstudianteTo> buscarPorNombreApellido(
-        @QueryParam("nombre") String nombre,
-        @QueryParam("apellido") String apellido) {
+    public List<EstudianteTo> buscarPorNombreApellido(@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido) {
         return this.iEstudianteService.buscarPorNombreApellido(nombre, apellido);
     }
-
 }
