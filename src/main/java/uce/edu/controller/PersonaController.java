@@ -2,8 +2,6 @@ package uce.edu.controller;
 
 import java.util.List;
 
-import javax.print.attribute.standard.Media;
-
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -25,74 +23,62 @@ public class PersonaController {
     @Inject
     private IPersonaService iPersonaService;
 
-    //objeto de tipo response
-
-
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_XML)
-
     public Response buscarPorId(@PathParam("id") Integer id) {
-        // Integer id = 3;
-        return Response.status(240).header("Es el Mensaje", "Persona Creada Pero en Proceso de Validacion").entity(this.iPersonaService.buscarPorId(id)).build();
-
-       
-        // return Response.ok(this.iPersonaService.buscarPorId(id)).build();
+        return Response.status(240).header("mensaje", "Persona creada en proceso de validacion...")
+                .entity(this.iPersonaService.buscarPorId(id)).build();
     }
 
     @POST
     @Path("")
-    public void guardar(PersonaTo persona) {
+    public Response guardar(PersonaTo persona) {
         this.iPersonaService.guardar(persona);
-
+        return Response.status(201).build();
     }
 
     @PUT
     @Path("/{id}")
-    public void actualizar(PersonaTo persona, @PathParam("id") Integer id) {
-        // persona.setId(id);
+    public Response actualizar(PersonaTo persona, @PathParam("id") Integer id) {
         this.iPersonaService.actualizar(persona);
-
+        return Response.status(200).build();
     }
 
     @PATCH
     @Path("/{id}/nuevo/{cedula}")
-    public void actualizarParcial(PersonaTo persona, @PathParam("id") Integer id, @PathParam("cedula") String cedula) {
-        System.out.println(cedula);
+    public Response actualizarParcial(PersonaTo persona, @PathParam("id") Integer id, @PathParam("cedula") String cedula) {
         PersonaTo tmp = this.iPersonaService.buscarPorId(id);
         tmp.setNombre(persona.getNombre());
         this.iPersonaService.actualizar(tmp);
-
+        return Response.status(200).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public void borrar(@PathParam("id") Integer id) {
-        // Integer id = 3;
+    public Response borrar(@PathParam("id") Integer id) {
         this.iPersonaService.eliminar(id);
-
+        return Response.status(204).build();
     }
-
 
     @GET
     @Path("")
+    @Produces(MediaType.APPLICATION_XML)
     public List<PersonaTo> buscarTodos() {
         return this.iPersonaService.buscarTodos();
     }
 
     @GET
     @Path("/porNombre")
-    public List<PersonaTo> buscarPorNombre(
-        @QueryParam("nombre") String nombre) {
+    @Produces(MediaType.APPLICATION_XML)
+    public List<PersonaTo> buscarPorNombre(@QueryParam("nombre") String nombre) {
         return this.iPersonaService.buscarPorNombre(nombre);
     }
 
     @GET
     @Path("/porNombreApellido")
-    public List<PersonaTo> buscarPorNombreApellido(
-        @QueryParam("nombre") String nombre,
-            @QueryParam("apellido") String apellido) {
+    @Produces(MediaType.APPLICATION_XML)
+    public List<PersonaTo> buscarPorNombreApellido(@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido) {
         return this.iPersonaService.buscarPorNombreApellido(nombre, apellido);
     }
-
 }
