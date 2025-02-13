@@ -2,6 +2,8 @@ package uce.edu.controller;
 
 import java.util.List;
 
+import javax.print.attribute.standard.Media;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -10,7 +12,10 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import uce.edu.service.IPersonaService;
 import uce.edu.to.PersonaTo;
 
@@ -20,13 +25,18 @@ public class PersonaController {
     @Inject
     private IPersonaService iPersonaService;
 
+    //objeto de tipo response
+
+
     @GET
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_XML)
 
-    public PersonaTo buscarPorId(@PathParam("id") Integer id) {
+    public Response buscarPorId(@PathParam("id") Integer id) {
         // Integer id = 3;
+        return Response.status(240).header("Es el Mensaje", "Persona Creada Pero en Proceso de Validacion").entity(this.iPersonaService.buscarPorId(id)).build();
 
-        return this.iPersonaService.buscarPorId(id);
+       
         // return Response.ok(this.iPersonaService.buscarPorId(id)).build();
     }
 

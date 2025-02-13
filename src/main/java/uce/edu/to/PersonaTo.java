@@ -3,22 +3,25 @@ package uce.edu.to;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class PersonaTo implements Serializable {
 
     private static final long serialVersionUID = -1544399202104638172L;
- 
 
- 
     private Integer id;
-  
+
     private String nombre;
-  
+
     private String apellido;
-   
+
     private LocalDateTime fechaNacimiento;
 
     public PersonaTo() {
     }
+
     public PersonaTo(Integer id, String nombre, String apellido, LocalDateTime fechaNacimiento) {
         this.id = id;
         this.nombre = nombre;
@@ -28,18 +31,21 @@ public class PersonaTo implements Serializable {
 
     // Getters and Setters
 
+    @XmlElement
     public Integer getId() {
         return id;
     }
 
+    @XmlElement
     public String getNombre() {
         return nombre;
     }
 
+    @XmlElement
     public String getApellido() {
         return apellido;
     }
-
+    @XmlElement
     public LocalDateTime getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -59,9 +65,5 @@ public class PersonaTo implements Serializable {
     public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-
-    
-    
-
 
 }
