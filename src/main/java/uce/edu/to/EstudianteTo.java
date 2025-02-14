@@ -3,6 +3,10 @@ package uce.edu.to;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.redissi.moshi.adapter.iso8601.jdk8.LocalDateTimeAdapter;
+
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 
 
 public class EstudianteTo implements Serializable{
@@ -12,6 +16,7 @@ public class EstudianteTo implements Serializable{
     private Integer id;
     private String nombre;
     private String apellido;
+  
     private LocalDateTime fechaNacimiento;
     private String cedula;
     private String hobbie;

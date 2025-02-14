@@ -87,6 +87,12 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>4.0.3</version> <!-- Verifica la última versión disponible -->
         </dependency>
+    
+      <dependency>
+        <groupId>com.redissi.moshi-adapters-iso8601</groupId>
+        <artifactId>adapters-jdk8</artifactId>
+        <version>0.2.0</version>
+      </dependency>
     </dependencies>
 
    

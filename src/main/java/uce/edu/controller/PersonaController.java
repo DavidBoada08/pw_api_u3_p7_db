@@ -3,6 +3,7 @@ package uce.edu.controller;
 import java.util.List;
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
@@ -14,9 +15,11 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import uce.edu.service.IPersonaService;
 import uce.edu.to.PersonaTo;
 
+@XmlRootElement
 @Path("/personas")
 public class PersonaController {
 
@@ -27,58 +30,63 @@ public class PersonaController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_XML)
     public Response buscarPorId(@PathParam("id") Integer id) {
-        return Response.status(240).header("mensaje", "Persona creada en proceso de validacion...")
-                .entity(this.iPersonaService.buscarPorId(id)).build();
+        return Response.status(240).header("mensaje", "Persona creada pero en proceso de validacion...").header("valor1", 500) .entity(this.iPersonaService.buscarPorId(id)).build();
+        //return this.iPersonaService.buscarPorId(id);
+        // return Response.ok(this.iPersonaService.buscarPorId(id)).build();
     }
 
     @POST
     @Path("")
-    public Response guardar(PersonaTo persona) {
+    @Consumes(MediaType.APPLICATION_XML)
+    // solo el post no recibe PATHVARIABLE
+    public void guardar(PersonaTo persona) {
         this.iPersonaService.guardar(persona);
-        return Response.status(201).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response actualizar(PersonaTo persona, @PathParam("id") Integer id) {
+    public void actualizar(PersonaTo persona, @PathParam("id") Integer id) {
+        persona.setId(id);
         this.iPersonaService.actualizar(persona);
-        return Response.status(200).build();
     }
 
     @PATCH
-    @Path("/{id}/nuevo/{cedula}")
-    public Response actualizarParcial(PersonaTo persona, @PathParam("id") Integer id, @PathParam("cedula") String cedula) {
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("/{id}")
+    public Response actualizarParcial(PersonaTo persona, @PathParam("id") Integer id) {
+        
         PersonaTo tmp = this.iPersonaService.buscarPorId(id);
         tmp.setNombre(persona.getNombre());
         this.iPersonaService.actualizar(tmp);
-        return Response.status(200).build();
+        return Response.ok(tmp).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response borrar(@PathParam("id") Integer id) {
+    public void borrar(@PathParam("id") Integer id) {
+ 
         this.iPersonaService.eliminar(id);
-        return Response.status(204).build();
+ 
     }
 
     @GET
     @Path("")
-    @Produces(MediaType.APPLICATION_XML)
     public List<PersonaTo> buscarTodos() {
         return this.iPersonaService.buscarTodos();
     }
-
+ 
     @GET
     @Path("/porNombre")
-    @Produces(MediaType.APPLICATION_XML)
     public List<PersonaTo> buscarPorNombre(@QueryParam("nombre") String nombre) {
         return this.iPersonaService.buscarPorNombre(nombre);
     }
+ 
 
     @GET
-    @Path("/porNombreApellido")
-    @Produces(MediaType.APPLICATION_XML)
-    public List<PersonaTo> buscarPorNombreApellido(@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido) {
+    @Path("/porNombreYApellido")
+    public List<PersonaTo> buscarPorNombreApellido(@QueryParam("nombre") String nombre,@QueryParam("apellido") String apellido) {
         return this.iPersonaService.buscarPorNombreApellido(nombre, apellido);
     }
+    
 }
